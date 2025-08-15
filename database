@@ -1,0 +1,383 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Aug 04, 2025 at 07:14 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `php_project`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `addcart`
+--
+
+CREATE TABLE `addcart` (
+  `id` int(11) NOT NULL,
+  `p_id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `size` varchar(50) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 1,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `status` enum('false','true') DEFAULT 'false',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `add_category`
+--
+
+CREATE TABLE `add_category` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `photo` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `add_category`
+--
+
+INSERT INTO `add_category` (`id`, `name`, `photo`, `created_at`) VALUES
+(1, 'Men\'s Fashion', 'category-1.jpg', '2025-08-04 16:15:09'),
+(2, 'Women\'s Fashion', 'category-2.jpg', '2025-08-04 16:15:09'),
+(3, 'Kids Fashion', 'category-3.jpg', '2025-08-04 16:15:09'),
+(4, 'Accessories', 'category-4.jpg', '2025-08-04 16:15:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `add_coupon`
+--
+
+CREATE TABLE `add_coupon` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `coupon_number` varchar(50) NOT NULL,
+  `discount` int(11) NOT NULL,
+  `duration` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `add_coupon`
+--
+
+INSERT INTO `add_coupon` (`id`, `name`, `coupon_number`, `discount`, `duration`, `created_at`) VALUES
+(1, 'First Order', 'FIRST10', 10, '30 days', '2025-08-04 16:15:09'),
+(2, 'Summer Sale', 'SUMMER20', 20, '15 days', '2025-08-04 16:15:09'),
+(3, 'New User', 'NEWUSER15', 15, '7 days', '2025-08-04 16:15:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `add_offer`
+--
+
+CREATE TABLE `add_offer` (
+  `id` int(11) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `photo` varchar(255) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `add_offer`
+--
+
+INSERT INTO `add_offer` (`id`, `product_name`, `photo`, `category_id`, `created_at`) VALUES
+(1, 'Special Offer - Men\'s Collection', 'offer-1.jpg', 1, '2025-08-04 16:15:09'),
+(2, 'Women\'s Fashion Sale', 'offer-2.jpg', 2, '2025-08-04 16:15:09'),
+(3, 'Kids Fashion Discount', 'offer-3.jpg', 3, '2025-08-04 16:15:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `add_product`
+--
+
+CREATE TABLE `add_product` (
+  `id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `size` varchar(50) NOT NULL,
+  `psdescription` text DEFAULT NULL,
+  `pldescription` text DEFAULT NULL,
+  `img1` varchar(255) DEFAULT NULL,
+  `img2` varchar(255) DEFAULT NULL,
+  `img3` varchar(255) DEFAULT NULL,
+  `img4` varchar(255) DEFAULT NULL,
+  `img5` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `add_product`
+--
+
+INSERT INTO `add_product` (`id`, `category_id`, `name`, `price`, `size`, `psdescription`, `pldescription`, `img1`, `img2`, `img3`, `img4`, `img5`, `created_at`) VALUES
+(1, 1, 'Men\'s Casual Shirt', 999.00, 'Large', 'Comfortable casual shirt for men', 'High-quality cotton casual shirt perfect for daily wear', 'product-1.jpg', 'product-2.jpg', 'product-3.jpg', 'product-4.jpg', 'product-5.jpg', '2025-08-04 16:15:09'),
+(2, 2, 'Women\'s Summer Dress', 1299.00, 'Medium', 'Elegant summer dress for women', 'Beautiful summer dress with floral pattern', 'product-6.jpg', 'product-7.jpg', 'product-8.jpg', 'product-9.jpg', 'product-10.jpg', '2025-08-04 16:15:09'),
+(3, 3, 'Kids T-Shirt', 499.00, 'Small', 'Comfortable kids t-shirt', 'Soft cotton t-shirt for kids', 'product-11.jpg', 'product-12.jpg', 'product-1.jpg', 'product-2.jpg', 'product-3.jpg', '2025-08-04 16:15:09'),
+(4, 4, 'Stylish Watch', 2499.00, 'One Size', 'Elegant wrist watch', 'Premium quality wrist watch with leather strap', 'product-4.jpg', 'product-5.jpg', 'product-6.jpg', 'product-7.jpg', 'product-8.jpg', '2025-08-04 16:15:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact`
+--
+
+CREATE TABLE `contact` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `mobile` varchar(20) NOT NULL,
+  `massage` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contact`
+--
+
+INSERT INTO `contact` (`id`, `name`, `email`, `mobile`, `massage`, `created_at`) VALUES
+(1, 'Customer Support', 'support@redstore.com', '9876543210', 'Welcome to Red Store!', '2025-08-04 16:15:09'),
+(2, 'Test User', 'test@example.com', '1234567890', 'This is a test message', '2025-08-04 16:15:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login`
+--
+
+CREATE TABLE `login` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `login`
+--
+
+INSERT INTO `login` (`id`, `email`, `password`) VALUES
+(1, 'admin@redstore.com', 'admin123');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `paymenttbl`
+--
+
+CREATE TABLE `paymenttbl` (
+  `id` int(11) NOT NULL,
+  `fname` varchar(255) NOT NULL,
+  `lname` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `mobile` varchar(20) NOT NULL,
+  `pin` varchar(10) NOT NULL,
+  `village` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `state` varchar(255) NOT NULL,
+  `address` text NOT NULL,
+  `payment` varchar(50) NOT NULL,
+  `p_id` int(11) DEFAULT NULL,
+  `order_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `order_status` enum('pending','processing','shipped','delivered','cancelled') DEFAULT 'pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_register`
+--
+
+CREATE TABLE `user_register` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_register`
+--
+
+INSERT INTO `user_register` (`id`, `name`, `email`, `password`, `created_at`) VALUES
+(1, 'John Doe', 'john@example.com', 'password123', '2025-08-04 16:15:09'),
+(2, 'Jane Smith', 'jane@example.com', 'password456', '2025-08-04 16:15:09');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `addcart`
+--
+ALTER TABLE `addcart`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `p_id` (`p_id`);
+
+--
+-- Indexes for table `add_category`
+--
+ALTER TABLE `add_category`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `add_coupon`
+--
+ALTER TABLE `add_coupon`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `add_offer`
+--
+ALTER TABLE `add_offer`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `category_id` (`category_id`);
+
+--
+-- Indexes for table `add_product`
+--
+ALTER TABLE `add_product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `category_id` (`category_id`);
+
+--
+-- Indexes for table `contact`
+--
+ALTER TABLE `contact`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `login`
+--
+ALTER TABLE `login`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `paymenttbl`
+--
+ALTER TABLE `paymenttbl`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `p_id` (`p_id`);
+
+--
+-- Indexes for table `user_register`
+--
+ALTER TABLE `user_register`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `addcart`
+--
+ALTER TABLE `addcart`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `add_category`
+--
+ALTER TABLE `add_category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `add_coupon`
+--
+ALTER TABLE `add_coupon`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `add_offer`
+--
+ALTER TABLE `add_offer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `add_product`
+--
+ALTER TABLE `add_product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `contact`
+--
+ALTER TABLE `contact`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `login`
+--
+ALTER TABLE `login`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `paymenttbl`
+--
+ALTER TABLE `paymenttbl`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_register`
+--
+ALTER TABLE `user_register`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `addcart`
+--
+ALTER TABLE `addcart`
+  ADD CONSTRAINT `addcart_ibfk_1` FOREIGN KEY (`p_id`) REFERENCES `add_product` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `add_offer`
+--
+ALTER TABLE `add_offer`
+  ADD CONSTRAINT `add_offer_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `add_category` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `add_product`
+--
+ALTER TABLE `add_product`
+  ADD CONSTRAINT `add_product_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `add_category` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `paymenttbl`
+--
+ALTER TABLE `paymenttbl`
+  ADD CONSTRAINT `paymenttbl_ibfk_1` FOREIGN KEY (`p_id`) REFERENCES `add_product` (`id`) ON DELETE SET NULL;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
